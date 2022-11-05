@@ -1,14 +1,14 @@
 <template>
   <div class="main-container">
-  <h1>Home Page</h1>
+    <h1>This is an request page</h1>
   </div>
 </template>
 
+
 <script>
-// @ is an alias to /src
 
 export default {
-  name: 'HomeView',
+  name: 'RequestView',
   components: {
   }
 }
