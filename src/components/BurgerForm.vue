@@ -1,9 +1,11 @@
 <template>
   
 <div>
-    <Message :msg="msg" v-show="msg"/>
   <div>
+
     <form id="burger-form" @submit="createBurger($event)">
+    <Message :msg="msg" v-show="msg"/>
+
    <div class="input-container">
     <label for="name">Name of customer:</label>
     <input type="text" id="name" name="name" v-model="name">
@@ -101,7 +103,7 @@ export default {
       this.msg = "Success!"
 
       setTimeout(() => {
-this.msg = null
+        this.msg = null
       }, 4000)
 
       console.log(res)
