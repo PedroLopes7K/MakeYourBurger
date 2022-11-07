@@ -1,10 +1,9 @@
 <template>
   
 <div>
-  <p>msg component</p>
-
+    <Message :msg="msg" v-show="msg"/>
   <div>
-    <form id="burger-form">
+    <form id="burger-form" @submit="createBurger($event)">
    <div class="input-container">
     <label for="name">Name of customer:</label>
     <input type="text" id="name" name="name" v-model="name">
@@ -46,9 +45,12 @@
 </template>
 
 <script>
-
+import Message from './Message.vue'
 export default {
   name: "BurgerForm",
+  components: {
+    Message
+  },
   data() {
     return {
       breads: null,
@@ -74,7 +76,43 @@ export default {
       this.meats = data.carnes
       this.optionsData = data.opcionais
 
+    },
+    async createBurger(e) {
+
+      e.preventDefault()
+
+      const data = {
+        nome: this.name,
+        carne: this.meat,
+        pao:   this.bread,
+        opcionais: Array.from(this.options) ,
+        status: "Solicitado"
+      }
+
+      const dataJson = JSON.stringify(data)
+
+      const req = await fetch("http://localhost:3000/burgers", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: dataJson
+      })
+
+      const res = await req.json()
+      this.msg = "Success!"
+
+      setTimeout(() => {
+this.msg = null
+      }, 4000)
+
+      console.log(res)
+      this.name = '',
+      this.meat = '',
+      this.bread = '',
+      this.options = []
+
+
     }
+
   },
 
   mounted() {
